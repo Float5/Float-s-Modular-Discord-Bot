@@ -4,6 +4,7 @@ import pickle
 from Utilities.command_imLeave.command_imLeave import imLeave
 from Scripts.path import getPath
 from Secret.Secret import DiscordBotToken
+from pickleManager import setPickle, getPickle
 
 
 def executeCommand(message, h_or_cmd, command):
@@ -15,6 +16,8 @@ def executeCommand(message, h_or_cmd, command):
     from Utilities.command_chatGPT.command_test import h_test, cmd_test
     from Utilities.command_chatGPT.command_addChannel import h_addChannel, cmd_addChannel
     from Utilities.command_chatGPT.command_delChannel import h_delChannel, cmd_delChannel
+    from Utilities.command_chatGPT.command_chatGPT_image import h_chatGPT_image, cmd_chatGPT_image
+    from Utilities.command_chatGPT.command_price import h_price, cmd_price
 
     return locals()[h_or_cmd + command](message)
 
@@ -29,7 +32,9 @@ cmds = {
     "지피티" : "chatGPT",
     "테스트" : "test",
     "채널추가" : "addChannel",
-    "채널삭제" : "delChannel"
+    "채널삭제" : "delChannel",
+    "가격" : "price"
+    #"지피티이미지" : "chatGPT_image"
 
 }
 

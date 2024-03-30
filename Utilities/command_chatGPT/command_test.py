@@ -11,5 +11,5 @@ def cmd_test(message):
     print(message)
 
     return discord.Embed(title=f"테스트 결과",
-                          description=f"{message}",
+                          description=f"{message.author.name}",
                           color=0x00aaaa)

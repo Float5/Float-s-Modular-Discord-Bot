@@ -7,6 +7,7 @@ from dotenv import load_dotenv
 from Scripts.ext import extractValue
 from Scripts.path import getPath
 from Secret.Secret import OpenAI_API_key
+from Scripts.pickleManager import getPickle, setPickle
 
 lastResponse = ""
 
@@ -20,9 +21,7 @@ def cmd_chatGPT_image(message):
     values = extractValue(message.content[5:], 1, True)
     content = str(values[0])
 
-    registerdChannels = []
-    with open(f"{getPath()}Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", "rb") as data:
-        registerdChannels = list(pickle.load(data))
+    registerdChannels = list(getPickle("Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle"))
 
     registerd = False
     for i in range(len(registerdChannels)):

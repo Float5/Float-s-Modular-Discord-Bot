@@ -4,6 +4,7 @@ import discord
 from Scripts.path import getPath
 
 from Scripts.ext import extractValue
+from Scripts.pickleManager import setPickle, getPickle
 
 
 def h_delChannel(message):
@@ -14,20 +15,15 @@ def h_delChannel(message):
                               color=0x00aaaa)
 
 def cmd_delChannel(message):
-    adminList = []
-
-    with open(getPath() + "Scripts\\Utilities\\command_chatGPT\\admin.pickle", "rb") as data:
-        adminList = list(pickle.load(data))
+    adminList = getPickle("Scripts\\Utilities\\command_chatGPT\\admin.pickle")
 
     if message.author.name not in adminList:
         return
 
     channelID = str(message.channel.id)
 
-    registerdChannels = []
+    registerdChannels = getPickle("Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle")
     channel = []
-    with open(getPath() + "Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", "rb") as data:
-        registerdChannels = list(pickle.load(data))
 
     isDeleted = False
     for i in range(len(registerdChannels)):
@@ -38,8 +34,7 @@ def cmd_delChannel(message):
             registerdChannels.pop(i)
             break
 
-    with open(f"{getPath()}Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", "wb") as data:
-        pickle.dump(registerdChannels, data)
+    setPickle("Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", registerdChannels)
 
     if not isDeleted:
         return discord.Embed(title=f"등록되어있는 채널이 아닙니다.",

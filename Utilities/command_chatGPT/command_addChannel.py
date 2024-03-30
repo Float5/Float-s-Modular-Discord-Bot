@@ -4,6 +4,7 @@ import discord
 from Scripts.path import getPath
 
 from Scripts.ext import extractValue
+from Scripts.pickleManager import getPickle, setPickle
 
 
 def h_addChannel(message):
@@ -14,10 +15,7 @@ def h_addChannel(message):
                               color=0x00aaaa)
 
 def cmd_addChannel(message):
-    adminList = []
-
-    with open(getPath() + "Scripts\\Utilities\\command_chatGPT\\admin.pickle", "rb") as data:
-        adminList = list(pickle.load(data))
+    adminList = list(getPickle("Scripts\\Utilities\\command_chatGPT\\admin.pickle"))
 
     if message.author.name not in adminList:
         return
@@ -30,9 +28,7 @@ def cmd_addChannel(message):
 
     channel = [channelID, serverID, usage]
 
-    registerdChannels = []
-    with open(getPath() + "Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", "rb") as data:
-        registerdChannels = list(pickle.load(data))
+    registerdChannels = list(getPickle("Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle"))
 
     isChanged = False
     for i in range(len(registerdChannels)):
@@ -44,8 +40,7 @@ def cmd_addChannel(message):
 
     registerdChannels.append(channel)
 
-    with open(f"{getPath()}Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", "wb") as data:
-        pickle.dump(registerdChannels, data)
+    setPickle("Scripts\\Utilities\\command_chatGPT\\registerdChannel.pickle", registerdChannels)
 
     if isChanged:
         return discord.Embed(title=f"채널이 이미 등록되어있습니다.",
